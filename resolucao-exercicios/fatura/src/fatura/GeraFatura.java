@@ -4,7 +4,7 @@ public class GeraFatura {
         Fatura fatura = new Fatura();
         fatura.numero = "001";
         fatura.descricao = "Mouse";
-        fatura.preco = 25.00;
+        fatura.preco = 25.50;
         fatura.quantComprada = 5;
 
         System.out.println("Produto: " +fatura.descricao);
