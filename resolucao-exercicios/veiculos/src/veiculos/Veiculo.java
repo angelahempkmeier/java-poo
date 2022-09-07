@@ -7,7 +7,7 @@ public class Veiculo {
     double valorLocacao;
     int quantDias;
 
-    //se o veículo for de passeio, recebe um desconto de R$20
+    //se o veículo for de passeio, recebe um desconto de R$20 no valor da locacao, nao no total
     public double passeio(int quantDias, double valorLocacao){
         double total = quantDias*(valorLocacao - 20);
         return total;
