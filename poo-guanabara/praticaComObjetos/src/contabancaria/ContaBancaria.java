@@ -1,5 +1,4 @@
 package contabancaria;
-
 import java.util.Scanner;
 
 public class ContaBancaria {
@@ -12,8 +11,8 @@ public class ContaBancaria {
     Scanner sc = new Scanner(System.in);
     //construtor - default da conta, sem saldo e status de fechada
     public ContaBancaria(){
-        this.saldo = 0;
-        this.status = false;
+        this.setSaldo(0);
+        this.setStatus(false);
     }
 
     //getters e setters
@@ -60,65 +59,68 @@ public class ContaBancaria {
     //métodos
     public void abrirConta(){
         if(this.status == false){
-            setTipo(this.tipo);
+            setTipo(tipo);
             setStatus(true);
-            System.out.println("Qual tipo de conta você quer abrir? CC ou CP?");
-            this.tipo = sc.nextLine();
+            //System.out.println("Qual tipo de conta você quer abrir? CC ou CP?");
+            //this.tipo = sc.next(); //tá dando erro na entrada do if quando eu libero essa opcao
             System.out.println("Sua conta é do tipo " + this.tipo);
-            if(tipo == "CC"){
-                setSaldo(50.0f);
+            if("CC".equals(tipo)){
+                this.setSaldo(50.0f); //tem que referenciar o objeto c/ this
                 //this.saldo = this.saldo + 50.0f;
                 //System.out.println("Entrou aqui");
                 System.out.println("O saldo é de " + this.saldo);
-            } else if (tipo == "CP") {
-                this.saldo = this.saldo + 150.0f;
+            } else if ("CP".equals(tipo)) {
+                this.setSaldo(150.0f);
+                //this.saldo = this.saldo + 150.0f;
                 System.out.println("O saldo é de " + this.saldo);
             }
         }
     }
     public void fecharConta() {
-        if (this.saldo != 0) {
+        if (this.getSaldo() != 0) {
             System.out.println("Você não pode fechar sua conta.");
         } else {
             setStatus(false);
             System.out.println("A sua conta foi fechada.");
         }
     }
-    public float depositar(float valorDeposito){
-        if (!this.status){
+    public void depositar(float valorDeposito){
+        if (!this.getStatus()){
             System.out.println("ERRO: Abra sua conta primeiro!");
         }else{
             System.out.println("Quanto você deseja depositar?");
             valorDeposito = sc.nextFloat();
-            this.saldo = this.saldo + valorDeposito;
-            System.out.println("O valor do seu saldo é de R$ " + this.saldo);
+            //this.saldo = this.saldo + valorDeposito;
+            this.setSaldo(getSaldo() + valorDeposito);
+            System.out.println("Depósito realizado com sucesso! O valor do saldo de " + this.getDono() + " é de R$ " + this.getSaldo());
         }
-        return this.saldo;
     }
-    public float sacar(float valorSacado){
+    public void sacar(float valorSacado){
         System.out.println("Digite o quanto você quer sacar!");
         valorSacado = sc.nextFloat();
-        if(!getStatus()){
+        if(!this.getStatus()){
             System.out.println("Abra sua conta primeiro.");
         }else {
-            if (valorSacado > this.saldo) {
+            if (valorSacado > this.getSaldo()) {
                 System.out.println("Operação inválida.");
             } else {
-                this.saldo = this.saldo - valorSacado;
+                //this.saldo = this.saldo - valorSacado;
+                setSaldo(getSaldo() - valorSacado);
+                System.out.println("Foi retirado R$ " + valorSacado + " de sua conta e o saldo atual é de " + this.getSaldo());
             }
         }
-        return this.saldo;
     }
     public float pagarMensal(){
-        if(this.status) {
-            float cobrancaMensal;
-            if (this.tipo == "CC") {
+        float cobrancaMensal;
+        if(this.getStatus()) {
+            if (this.getTipo() == "CC") {
                 cobrancaMensal = 12.0f;
             } else {
                 cobrancaMensal = 20.0f;
             }
-            if (this.saldo > cobrancaMensal){
-                this.saldo = this.saldo - cobrancaMensal;
+            if (this.getSaldo() > cobrancaMensal){
+                this.setSaldo(getSaldo() - cobrancaMensal);
+                //this.saldo = this.saldo - cobrancaMensal;
             }else {
                 System.out.println("Saldo insuficiente. Contate o banco.");
             }
@@ -127,4 +129,14 @@ public class ContaBancaria {
         }
         return this.saldo;
     }
+    public void estadoAtual(){
+        System.out.println("--------------------------------------------");
+        System.out.println("Conta: " + this.getNumConta());
+        System.out.println("Dono " + this.getDono());
+        System.out.println("Tipo: " + this.getTipo());
+        System.out.println("Saldo: " + this.getSaldo());
+        System.out.println("Status: " + this.getStatus());
+    }
+
+
 }
