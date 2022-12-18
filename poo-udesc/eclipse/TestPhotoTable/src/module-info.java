@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author aggsdp
+ *
+ */
+module TestPhotoTable {
+}
